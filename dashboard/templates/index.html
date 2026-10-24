@@ -1,0 +1,19 @@
+<!doctype html>
+<title>Cloud Threat Dashboard</title>
+<style>
+body{font-family:system-ui;margin:2rem;background:#f4f6f8}
+.cards span{display:inline-block;padding:.6rem 1.2rem;margin-right:.6rem;border-radius:6px;color:#fff;font-weight:600}
+.High{background:#d32f2f}.Medium{background:#f57c00}.Low{background:#388e3c}
+table{border-collapse:collapse;width:100%;background:#fff;margin-top:1rem}
+th,td{padding:.5rem .7rem;border-bottom:1px solid #ddd;text-align:left}
+th{background:#263238;color:#fff}a{margin-right:.8rem}
+</style>
+<h1>Cloud Security Alerts</h1>
+<div class="cards">{% for l,n in counts.items() %}<span class="{{l}}">{{l}}: {{n}}</span>{% endfor %}</div>
+<p>Filter: <a href="/">All</a><a href="/?level=High">High</a><a href="/?level=Medium">Medium</a><a href="/?level=Low">Low</a> (showing: {{level}})</p>
+<table>
+<tr><th>Time</th><th>Event</th><th>User</th><th>IP</th><th>Score</th><th>Level</th><th>Reasons</th></tr>
+{% for a in alerts %}<tr><td>{{a.timestamp}}</td><td>{{a.event}}</td><td>{{a.user}}</td><td>{{a.source_ip}}</td>
+<td>{{a.risk_score}}</td><td><b class="{{a.risk_level}}" style="padding:2px 8px;color:#fff;border-radius:4px">{{a.risk_level}}</b></td>
+<td>{{a.reasons|join('; ')}}</td></tr>{% endfor %}
+</table>

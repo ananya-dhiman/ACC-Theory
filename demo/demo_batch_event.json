@@ -1,0 +1,122 @@
+{
+  "events": [
+    {
+      "_label": "Normal S3 list",
+      "eventTime": "2026-10-24T09:00:00Z",
+      "eventName": "ListBuckets",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/alice"
+      },
+      "sourceIPAddress": "203.0.113.10"
+    },
+    {
+      "_label": "Normal successful login",
+      "eventTime": "2026-10-24T09:05:00Z",
+      "eventName": "ConsoleLogin",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/alice"
+      },
+      "sourceIPAddress": "203.0.113.10",
+      "responseElements": {
+        "ConsoleLogin": "Success"
+      }
+    },
+    {
+      "_label": "Failed console login",
+      "eventTime": "2026-10-24T10:00:00Z",
+      "eventName": "ConsoleLogin",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/bob"
+      },
+      "sourceIPAddress": "198.51.100.7",
+      "responseElements": {
+        "ConsoleLogin": "Failure"
+      }
+    },
+    {
+      "_label": "Failed root login",
+      "eventTime": "2026-10-24T10:02:00Z",
+      "eventName": "ConsoleLogin",
+      "userIdentity": {
+        "type": "Root",
+        "arn": "arn:aws:iam::123456789012:root"
+      },
+      "sourceIPAddress": "198.51.100.7",
+      "responseElements": {
+        "ConsoleLogin": "Failure"
+      }
+    },
+    {
+      "_label": "Unauthorized EC2 call",
+      "eventTime": "2026-10-24T11:00:00Z",
+      "eventName": "RunInstances",
+      "errorCode": "Client.UnauthorizedOperation",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/bob"
+      },
+      "sourceIPAddress": "198.51.100.7"
+    },
+    {
+      "_label": "S3 AccessDenied",
+      "eventTime": "2026-10-24T11:05:00Z",
+      "eventName": "GetObject",
+      "errorCode": "AccessDenied",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/bob"
+      },
+      "sourceIPAddress": "198.51.100.7"
+    },
+    {
+      "_label": "Access key created",
+      "eventTime": "2026-10-24T12:00:00Z",
+      "eventName": "CreateAccessKey",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/alice"
+      },
+      "sourceIPAddress": "203.0.113.10"
+    },
+    {
+      "_label": "Admin policy attached",
+      "eventTime": "2026-10-24T12:10:00Z",
+      "eventName": "AttachUserPolicy",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/bob"
+      },
+      "sourceIPAddress": "198.51.100.7",
+      "requestParameters": {
+        "userName": "bob",
+        "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+      }
+    },
+    {
+      "_label": "New IAM user",
+      "eventTime": "2026-10-24T12:20:00Z",
+      "eventName": "CreateUser",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/alice"
+      },
+      "sourceIPAddress": "203.0.113.10",
+      "requestParameters": {
+        "userName": "temp"
+      }
+    },
+    {
+      "_label": "CloudTrail stopped",
+      "eventTime": "2026-10-24T13:00:00Z",
+      "eventName": "StopLogging",
+      "userIdentity": {
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::123456789012:user/bob"
+      },
+      "sourceIPAddress": "198.51.100.7"
+    }
+  ]
+}
